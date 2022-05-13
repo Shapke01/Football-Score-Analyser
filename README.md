@@ -1,4 +1,4 @@
 # Football-Score-Analyser
-Kacper Dobek
-Stanisław Hapke
+* Kacper Dobek
+* Stanisław Hapke
 
