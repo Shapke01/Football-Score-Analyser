@@ -16,11 +16,8 @@ ui <- dashboardPage(
     tabItems(
       tabItem("PL",
               fluidPage(
-                box(plotOutput("some_plot"), width = 8),
-                box(
-                  selectInput("features", "Features:",
-                              c("Sepal.Width", "Petal.Length", "Petal.Width")), width = 4
-                )
+                h2("Table of matches"),
+                dataTableOutput("matches_table")
               )
       ),
       

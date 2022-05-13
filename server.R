@@ -1,6 +1,8 @@
 library(shiny)
 library(shinydashboard)
 library(httr)
+library(DT)
+library(jsonlite)
 
 
 server <- function(input, output){
@@ -8,7 +10,10 @@ server <- function(input, output){
                 add_headers("X-Auth-Token"="0fdd6155b06b4707bda7e82a11b5c44f")
   )
   
-  output$some_plot <- renderPlot({
-    plot(iris$Sepal.Length, iris[[input$features]])
+  matches <- content(matches, as="text")
+  matches <- fromJSON(matches)
+  
+  output$matches_table <- renderDataTable({
+    matches$competitions
   })
 }
