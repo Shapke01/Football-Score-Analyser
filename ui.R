@@ -7,16 +7,16 @@ ui <- dashboardPage(
   
   dashboardSidebar(
     sidebarMenu(
-      menuItem("Premier League", tabName = "PL", icon = icon("Premier League")),
+      menuItem("Serie A", tabName = "SA", icon = icon("Series A")),
       menuItem("La Liga", tabName = "LA", icon = icon("La Liga"))
     )
   ),
   
   dashboardBody(
     tabItems(
-      tabItem("PL",
+      tabItem("SA",
               fluidPage(
-                h2("Table of matches"),
+                h2("League Table"),
                 dataTableOutput("matches_table")
               )
       ),
