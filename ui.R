@@ -7,8 +7,8 @@ ui <- dashboardPage(
   
   dashboardSidebar(
     sidebarMenu(
-      menuItem("Serie A", tabName = "SA", icon = icon("Series A")),
-      menuItem("La Liga", tabName = "LA", icon = icon("La Liga"))
+      menuItem("Serie A", tabName = "SA", icon = icon("fa-solid fa-futbol")),
+      menuItem("La Liga", tabName = "LA", icon = icon("fa-solid fa-futbol"))
     )
   ),
   
