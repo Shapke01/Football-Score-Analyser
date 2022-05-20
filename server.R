@@ -5,6 +5,8 @@ library(DT)
 library(jsonlite)
 library(dplyr)
 library(Dict)
+library(ggplot2)
+library(plotly)
 
 league <- function(league_name){
   
@@ -18,6 +20,7 @@ league <- function(league_name){
   table <- table %>% mutate(name = team$name) %>%
     relocate(name, .after = position) %>%
     select(-form, -team)
+  
   season <- as.data.frame(league_standings$standings$season)
   season <- bind_rows(season)
   season <- season %>% as_tibble()
@@ -50,6 +53,17 @@ league <- function(league_name){
   return(dic)
 }
 
+top_score <- function(league_name){
+  x = leagues$get(league_name)$get("scorers") %>%
+    ggplot(aes(x=reorder(player$name, numberOfGoals), y=numberOfGoals)) +
+    geom_bar(stat="identity", fill="#f68060", alpha=.6, width=.4) +
+    geom_text(aes(label=numberOfGoals), vjust=-1) +
+    coord_flip() +
+    xlab("") +
+    theme_bw()
+  return(x)
+}
+
 leagues <- Dict$new(
   SA = league("SA"),
   PL = league("PL"),
@@ -59,6 +73,7 @@ leagues <- Dict$new(
   .overwrite = TRUE
 )
 
+top_score("SA")
 # a = leagues$get("SA")$get("table")
 
 server <- function(input, output){
@@ -66,24 +81,41 @@ server <- function(input, output){
     leagues$get("SA")$get("table") %>% 
       select(-goalsFor, -goalsAgainst)
   })
+  output$SA_top_scorers <- renderPlot(
+    top_score("SA")
+  )
   
   output$PL_matches_table <- renderDataTable({
     leagues$get("PL")$get("table") %>% 
       select(-goalsFor, -goalsAgainst)
   })
+  output$PL_top_scorers <- renderPlot(
+    top_score("PL")
+  )
   
   output$PD_matches_table <- renderDataTable({
     leagues$get("PD")$get("table") %>% 
       select(-goalsFor, -goalsAgainst)
   })
+  output$PD_top_scorers <- renderPlot(
+    top_score("PD")
+  )
   
   output$BL1_matches_table <- renderDataTable({
     leagues$get("BL1")$get("table") %>% 
       select(-goalsFor, -goalsAgainst)
   })
+  output$BL1_top_scorers <- renderPlot(
+    top_score("BL1")
+  )
   
   output$FL1_matches_table <- renderDataTable({
     leagues$get("FL1")$get("table") %>% 
       select(-goalsFor, -goalsAgainst)
   })
+  output$FL1_top_scorers <- renderPlot(
+    top_score("FL1")
+  )
+  
+  
 }
