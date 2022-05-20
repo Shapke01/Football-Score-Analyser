@@ -63,22 +63,27 @@ leagues <- Dict$new(
 
 server <- function(input, output){
   output$SA_matches_table <- renderDataTable({
-    leagues$get("SA")$get("table")
+    leagues$get("SA")$get("table") %>% 
+      select(-goalsFor, -goalsAgainst)
   })
   
   output$PL_matches_table <- renderDataTable({
-    leagues$get("PL")$get("table")
+    leagues$get("PL")$get("table") %>% 
+      select(-goalsFor, -goalsAgainst)
   })
   
   output$PD_matches_table <- renderDataTable({
-    leagues$get("PD")$get("table")
+    leagues$get("PD")$get("table") %>% 
+      select(-goalsFor, -goalsAgainst)
   })
   
   output$BL1_matches_table <- renderDataTable({
-    leagues$get("BL1")$get("table")
+    leagues$get("BL1")$get("table") %>% 
+      select(-goalsFor, -goalsAgainst)
   })
   
   output$FL1_matches_table <- renderDataTable({
-    leagues$get("FL1")$get("table")
+    leagues$get("FL1")$get("table") %>% 
+      select(-goalsFor, -goalsAgainst)
   })
 }
