@@ -4,6 +4,7 @@ library(httr)
 library(DT)
 library(jsonlite)
 library(dplyr)
+library(Dict)
 
 league <- function(league_name){
   
@@ -46,8 +47,6 @@ league <- function(league_name){
     .overwrite = TRUE
   )
   
-  print(dic$get("table"))
-  
   return(dic)
 }
 
@@ -60,11 +59,26 @@ leagues <- Dict$new(
   .overwrite = TRUE
 )
 
-a = leagues$get("SA")$get("table")
+# a = leagues$get("SA")$get("table")
 
 server <- function(input, output){
+  output$SA_matches_table <- renderDataTable({
+    leagues$get("SA")$get("table")
+  })
   
-  output$matches_table <- renderDataTable({
+  output$PL_matches_table <- renderDataTable({
+    leagues$get("PL")$get("table")
+  })
+  
+  output$PD_matches_table <- renderDataTable({
+    leagues$get("PD")$get("table")
+  })
+  
+  output$BL1_matches_table <- renderDataTable({
     leagues$get("BL1")$get("table")
+  })
+  
+  output$FL1_matches_table <- renderDataTable({
+    leagues$get("FL1")$get("table")
   })
 }
