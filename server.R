@@ -21,9 +21,7 @@ league <- function(league_name){
     relocate(name, .after = position) %>%
     select(-form, -team)
   
-  season <- as.data.frame(league_standings$standings$season)
-  season <- bind_rows(season)
-  season <- season %>% as_tibble()
+  season <- league_standings$season
   
   league_scorers = GET(paste("http://api.football-data.org/v2/competitions/",league_name,"/scorers", sep = ""),
                        add_headers("X-Auth-Token"="0fdd6155b06b4707bda7e82a11b5c44f"))
@@ -84,7 +82,17 @@ server <- function(input, output){
   output$SA_top_scorers <- renderPlot(
     top_score("SA")
   )
-  
+  output$SA_progress <- renderValueBox({
+    progress <- as.numeric(Sys.Date() - as.Date(leagues$get("SA")$get("season")$startDate, format = "%Y-%m-%d")) / 
+      as.numeric((as.Date(leagues$get("SA")$get("season")$endDate, format = "%Y-%m-%d")) - as.Date(leagues$get("SA")$get("season")$startDate, format = "%Y-%m-%d"))
+    valueBox(
+      paste0(format(round(progress, 2), nsmall = 2), "%"), "Season Progress", icon = icon("fas fa-trophy"),
+      color = "purple",
+      width = NULL,
+    )
+  }
+    
+  )
   output$PL_matches_table <- renderDataTable({
     leagues$get("PL")$get("table") %>% 
       select(-goalsFor, -goalsAgainst)
@@ -119,3 +127,4 @@ server <- function(input, output){
   
   
 }
+
