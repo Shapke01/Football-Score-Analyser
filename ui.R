@@ -31,26 +31,26 @@ body <- dashboardBody(
             fluidPage(
               
               column(width=6,
-              box(
-                title = "League Table",
-                solidHeader = TRUE,
-                width = NULL,
-                status = "primary",
-                dataTableOutput("SA_matches_table")
-              ), 
-              box(
-                title = "Top scorers",
-                solidHeader = TRUE,
-                width = NULL,
-                height = 300,
-                status = "primary",
-                plotOutput("SA_top_scorers")
-              )
+                box(
+                  title = "League Table",
+                  solidHeader = TRUE,
+                  width = NULL,
+                  status = "primary",
+                  dataTableOutput("SA_matches_table")
+                ), 
+                box(
+                  title = "Top scorers",
+                  solidHeader = TRUE,
+                  width = NULL,
+                  height = 300,
+                  status = "primary",
+                  plotOutput("SA_top_scorers")
+                )
               ),
               
               column(width=4,
                       valueBoxOutput("SA_progress")
-            )
+              )
             )
     ),
     # La Liga
@@ -110,7 +110,7 @@ body <- dashboardBody(
     
     tabItem("CMP",
             fluidPage(
-              h2("AAAAAAAAAA")
+              valueBoxOutput("CMP_golden_shoe")
             )
     )
   )

@@ -71,8 +71,12 @@ leagues <- Dict$new(
   .overwrite = TRUE
 )
 
-top_score("SA")
-# a = leagues$get("SA")$get("table")
+all_leagues = rbind(leagues$get("SA")$get("scorers"),
+                    leagues$get("PL")$get("scorers"),
+                    leagues$get("PD")$get("scorers"),
+                    leagues$get("BL1")$get("scorers"),
+                    leagues$get("FL1")$get("scorers"))
+
 
 server <- function(input, output){
   output$SA_matches_table <- renderDataTable({
@@ -86,7 +90,7 @@ server <- function(input, output){
     progress <- as.numeric(Sys.Date() - as.Date(leagues$get("SA")$get("season")$startDate, format = "%Y-%m-%d")) / 
       as.numeric((as.Date(leagues$get("SA")$get("season")$endDate, format = "%Y-%m-%d")) - as.Date(leagues$get("SA")$get("season")$startDate, format = "%Y-%m-%d"))
     valueBox(
-      paste0(format(round(progress, 2), nsmall = 2), "%"), "Season Progress", icon = icon("fas fa-trophy"),
+      paste0(format(round(progress, 3) *100, nsmall = 2), "%"), "Season Progress", icon = icon("fas fa-trophy"),
       color = "purple",
       width = NULL,
     )
@@ -124,6 +128,13 @@ server <- function(input, output){
   output$FL1_top_scorers <- renderPlot(
     top_score("FL1")
   )
+  
+  output$CMP_golden_shoe <- renderValueBox({
+    valueBox(all_leagues[which.max(all_leagues$numberOfGoals),]$player$name,
+             "European Golden Shoe", 
+             icon = icon("fa-solid fa-shoe-prints"),
+             color = "yellow")
+  })
   
   
 }
