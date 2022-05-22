@@ -2,6 +2,35 @@ library(shiny)
 library(shinydashboard)
 library(httr)
 
+league_fluid_page <- function(league_name){
+  x = fluidPage(
+    
+    column(width=6,
+           box(
+             title = "League Table",
+             solidHeader = TRUE,
+             width = NULL,
+             status = "primary",
+             dataTableOutput(paste0(league_name,"_matches_table"))
+           ), 
+           box(
+             title = "Top scorers",
+             solidHeader = TRUE,
+             width = NULL,
+             height = 300,
+             status = "primary",
+             plotOutput(paste0(league_name,"_top_scorers"))
+           )
+    ),
+    
+    column(width=4,
+           valueBoxOutput(paste0(league_name,"_progress"))
+    )
+  )
+  return(x)
+}
+
+
 header <- dashboardHeader(title = "Football Score Analyzer")
 
 sideBar <- dashboardSidebar(
@@ -28,84 +57,23 @@ body <- dashboardBody(
     ),
     #Series A
     tabItem("SA",
-            fluidPage(
-              
-              column(width=6,
-                box(
-                  title = "League Table",
-                  solidHeader = TRUE,
-                  width = NULL,
-                  status = "primary",
-                  dataTableOutput("SA_matches_table")
-                ), 
-                box(
-                  title = "Top scorers",
-                  solidHeader = TRUE,
-                  width = NULL,
-                  height = 300,
-                  status = "primary",
-                  plotOutput("SA_top_scorers")
-                )
-              ),
-              
-              column(width=4,
-                      valueBoxOutput("SA_progress")
-              )
-            )
+            league_fluid_page("SA")
     ),
     # La Liga
     tabItem("PD",
-            fluidPage(
-              box(
-                title = "League Table",
-                dataTableOutput("PD_matches_table")
-              ),
-              box(
-                title = "Top scorers",
-                plotOutput("PD_top_scorers")
-              )
-            )
+            league_fluid_page("PD")
     ),
     #Premier League
     tabItem("PL",
-            fluidPage(
-              box(
-                title = "League Table",
-                dataTableOutput("PL_matches_table")
-              ),
-              box(
-                title = "Top scorers",
-                plotOutput("PL_top_scorers")
-              )
-              
-            )
+            league_fluid_page("PL")
     ),
     #Ligue 1
     tabItem("FL1",
-            fluidPage(
-              box(
-                title = "League Table",
-                dataTableOutput("FL1_matches_table")
-              ),
-              box(
-                title = "Top scorers",
-                plotOutput("FL1_top_scorers")
-              )
-            )
+            league_fluid_page("FL1")
     ),
     #Bundesliga
     tabItem("BL1",
-            fluidPage(
-              box(
-                title = "League Table",
-                dataTableOutput("BL1_matches_table")
-              ),
-              box(
-                title = "Top scorers",
-                plotOutput("BL1_top_scorers")
-              )
-              
-            )
+            league_fluid_page("BL1")
     ),
     
     tabItem("CMP",

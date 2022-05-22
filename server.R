@@ -62,6 +62,17 @@ top_score <- function(league_name){
   return(x)
 }
 
+season_progress <- function(league_name){
+  progress <- as.numeric(Sys.Date() - as.Date(leagues$get(league_name)$get("season")$startDate, format = "%Y-%m-%d")) / 
+    as.numeric((as.Date(leagues$get(league_name)$get("season")$endDate, format = "%Y-%m-%d")) - as.Date(leagues$get(league_name)$get("season")$startDate, format = "%Y-%m-%d"))
+  x = valueBox(
+    paste0(format(min(round(progress, 3) *100, 100), nsmall = 1), "%"), "Season Progress", icon = icon("fas fa-trophy"),
+    color = "purple",
+    width = NULL,
+  )
+  return(x)
+}
+
 leagues <- Dict$new(
   SA = league("SA"),
   PL = league("PL"),
@@ -79,6 +90,8 @@ all_leagues = rbind(leagues$get("SA")$get("scorers"),
 
 
 server <- function(input, output){
+  
+  #### SERIES A
   output$SA_matches_table <- renderDataTable({
     leagues$get("SA")$get("table") %>% 
       select(-goalsFor, -goalsAgainst)
@@ -87,15 +100,10 @@ server <- function(input, output){
     top_score("SA")
   )
   output$SA_progress <- renderValueBox({
-    progress <- as.numeric(Sys.Date() - as.Date(leagues$get("SA")$get("season")$startDate, format = "%Y-%m-%d")) / 
-      as.numeric((as.Date(leagues$get("SA")$get("season")$endDate, format = "%Y-%m-%d")) - as.Date(leagues$get("SA")$get("season")$startDate, format = "%Y-%m-%d"))
-    valueBox(
-      paste0(format(round(progress, 3) *100, nsmall = 2), "%"), "Season Progress", icon = icon("fas fa-trophy"),
-      color = "purple",
-      width = NULL,
-    )
+    season_progress("SA")
   }
     
+  #### PREMIER LEAGUE
   )
   output$PL_matches_table <- renderDataTable({
     leagues$get("PL")$get("table") %>% 
@@ -104,7 +112,11 @@ server <- function(input, output){
   output$PL_top_scorers <- renderPlot(
     top_score("PL")
   )
+  output$PL_progress <- renderValueBox({
+    season_progress("PL")
+  })
   
+  #### LA LIGA
   output$PD_matches_table <- renderDataTable({
     leagues$get("PD")$get("table") %>% 
       select(-goalsFor, -goalsAgainst)
@@ -112,7 +124,12 @@ server <- function(input, output){
   output$PD_top_scorers <- renderPlot(
     top_score("PD")
   )
+  output$PD_progress <- renderValueBox({
+    season_progress("PD")
+  })
   
+  
+  #### BUNDESLIGA
   output$BL1_matches_table <- renderDataTable({
     leagues$get("BL1")$get("table") %>% 
       select(-goalsFor, -goalsAgainst)
@@ -120,7 +137,11 @@ server <- function(input, output){
   output$BL1_top_scorers <- renderPlot(
     top_score("BL1")
   )
+  output$BL1_progress <- renderValueBox({
+    season_progress("BL1")
+  })
   
+  #### LIGUE 1
   output$FL1_matches_table <- renderDataTable({
     leagues$get("FL1")$get("table") %>% 
       select(-goalsFor, -goalsAgainst)
@@ -128,7 +149,11 @@ server <- function(input, output){
   output$FL1_top_scorers <- renderPlot(
     top_score("FL1")
   )
+  output$FL1_progress <- renderValueBox({
+    season_progress("FL1")
+  })
   
+  #### COMPARE
   output$CMP_golden_shoe <- renderValueBox({
     valueBox(all_leagues[which.max(all_leagues$numberOfGoals),]$player$name,
              "European Golden Shoe", 
