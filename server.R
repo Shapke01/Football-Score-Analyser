@@ -109,7 +109,7 @@ server <- function(input, output){
     s = input$SA_matches_table_rows_selected
     par(mar = c(4, 4, 1, .1))
     goals <- leagues$get("SA")$get("table") %>% select(goalsFor, goalsAgainst)
-    plot(goals)
+    plot(goals, cex.axis=1.2, cex.lab=1.5)
     if (length(s)) points(goals[s, , drop = FALSE], pch = 19, cex = 2)
   })
   output$x4 = renderPrint({
