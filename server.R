@@ -82,7 +82,7 @@ leagues <- Dict$new(
   .overwrite = TRUE
 )
 
-all_leagues = rbind(data.frame(leagues$get("SA")$get("scorers")) ,
+all_leagues = bind_rows(data.frame(leagues$get("SA")$get("scorers")) ,
                     data.frame(leagues$get("PL")$get("scorers")) ,
                     data.frame(leagues$get("PD")$get("scorers")) ,
                     data.frame(leagues$get("BL1")$get("scorers")) ,
@@ -103,6 +103,13 @@ server <- function(input, output){
   )
   output$SA_progress <- renderValueBox({
     season_progress("SA")
+  })
+  output$SA_scatter_plot <- renderPlot({
+    s = input$SA_matches_table_rows_selected
+    par(mar = c(4, 4, 1, .1))
+    goals <- leagues$get("SA")$get("table") %>% select(goalsFor, goalsAgainst)
+    plot(goals)
+    if (length(s)) points(goals[s, , drop = FALSE], pch = 19, cex = 2)
   })
   output$x4 = renderPrint({
     s = input$SA_matches_table_rows_all

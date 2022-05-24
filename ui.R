@@ -10,20 +10,22 @@ league_fluid_page <- function(league_name){
              title = "League Table",
              solidHeader = TRUE,
              width = NULL,
+             height = 500,
              status = "primary",
              dataTableOutput(paste0(league_name,"_matches_table"))
            ), 
+           plotOutput(paste0(league_name,"_scatter_plot")),
+           ),
+    
+    column(width=5,
            box(
              title = "Top scorers",
              solidHeader = TRUE,
              width = NULL,
-             height = 300,
+             height = 500,
              status = "primary",
              plotOutput(paste0(league_name,"_top_scorers"))
-           )
-    ),
-    
-    column(width=4,
+           ),
            valueBoxOutput(paste0(league_name,"_progress"))
     )
   )
@@ -35,6 +37,7 @@ header <- dashboardHeader(title = "Football Score Analyzer")
 
 sideBar <- dashboardSidebar(
   sidebarMenu(
+    style = "font-size: 20px",
     menuItem("About", tabName = "AB", icon = icon("fa-solid fa-question")),
     menuItem("Leagues", tabName = "LEAGUES", icon = icon("fa-solid fa-align-justify"),
              menuSubItem("Serie A", tabName = "SA", icon = icon("fa-solid fa-futbol")),
@@ -84,4 +87,4 @@ body <- dashboardBody(
   )
 )
 
-ui <- dashboardPage(header, sideBar, body)
+ui <- dashboardPage(header, sideBar, body, includeCSS("www/style.css"))
