@@ -10,7 +10,7 @@ league_fluid_page <- function(league_name){
              title = "League Table",
              solidHeader = TRUE,
              width = NULL,
-             height = 500,
+             height = 550,
              status = "primary",
              dataTableOutput(paste0(league_name,"_matches_table"))
            ), 
@@ -22,7 +22,7 @@ league_fluid_page <- function(league_name){
              title = "Top scorers",
              solidHeader = TRUE,
              width = NULL,
-             height = 500,
+             height = 550,
              status = "primary",
              plotOutput(paste0(league_name,"_top_scorers"))
            ),
@@ -51,6 +51,9 @@ sideBar <- dashboardSidebar(
 )
 
 body <- dashboardBody(
+  tags$head(
+    tags$link(rel = "stylesheet", type = "text/css", href = "style.css")
+  ),
   tabItems(
     # About
     tabItem("AB",
@@ -87,4 +90,4 @@ body <- dashboardBody(
   )
 )
 
-ui <- dashboardPage(header, sideBar, body, includeCSS("www/style.css"))
+ui <- dashboardPage(header, sideBar, body)

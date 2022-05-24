@@ -56,9 +56,10 @@ top_score <- function(league_name){
     ggplot(aes(x=reorder(player$name, numberOfGoals), y=numberOfGoals)) +
     geom_bar(stat="identity", fill="#f68060", alpha=.6, width=.4) +
     geom_text(aes(label=numberOfGoals), vjust=-1) +
+    theme(text = element_text(size = 20)) +
     coord_flip() +
-    xlab("") +
-    theme_bw()
+    xlab("")
+    #theme_bw()
   return(x)
 }
 
