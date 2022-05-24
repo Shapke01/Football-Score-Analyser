@@ -68,7 +68,7 @@ season_progress <- function(league_name){
   x = valueBox(
     paste0(format(min(round(progress, 3) *100, 100), nsmall = 1), "%"), "Season Progress", icon = icon("fas fa-trophy"),
     color = "purple",
-    width = NULL,
+    width = NULL
   )
   return(x)
 }
@@ -82,11 +82,13 @@ leagues <- Dict$new(
   .overwrite = TRUE
 )
 
-all_leagues = rbind(leagues$get("SA")$get("scorers"),
-                    leagues$get("PL")$get("scorers"),
-                    leagues$get("PD")$get("scorers"),
-                    leagues$get("BL1")$get("scorers"),
-                    leagues$get("FL1")$get("scorers"))
+all_leagues = rbind(data.frame(leagues$get("SA")$get("scorers")) ,
+                    data.frame(leagues$get("PL")$get("scorers")) ,
+                    data.frame(leagues$get("PD")$get("scorers")) ,
+                    data.frame(leagues$get("BL1")$get("scorers")) ,
+                    data.frame(leagues$get("FL1")$get("scorers")) )
+
+data.frame(leagues$get("SA")$get("scorers")) 
 
 
 server <- function(input, output){
@@ -101,10 +103,16 @@ server <- function(input, output){
   )
   output$SA_progress <- renderValueBox({
     season_progress("SA")
-  }
+  })
+  output$x4 = renderPrint({
+    s = input$SA_matches_table_rows_all
+    if (length(s)) {
+      cat('These rows were selected:\n\n')
+      cat(s, sep = ', ')
+    }
+  })
     
   #### PREMIER LEAGUE
-  )
   output$PL_matches_table <- renderDataTable({
     leagues$get("PL")$get("table") %>% 
       select(-goalsFor, -goalsAgainst)
