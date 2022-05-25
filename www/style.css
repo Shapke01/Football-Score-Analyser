@@ -1,14 +1,17 @@
 @import url('https://fonts.googleapis.com/css?family=Muli:400,400i,700&display=swap');
 
-body{
-    font-size: 14px;
-    font-family: 'Muli';
+body {
+  font-size: 14px;
+  font-family: 'Muli';
 }
 
 .main-sidebar {
-    font-size: 24px;
+  font-size: 24px;
 }
-
+img {
+  width: 100px;
+  height: 100px;
+}
 .box {
   margin-top: 20px;
   margin-bottom: 30px;

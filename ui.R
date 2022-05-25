@@ -36,8 +36,8 @@ league_fluid_page <- function(league_name){
 header <- dashboardHeader(title = "Football Score Analyzer")
 
 sideBar <- dashboardSidebar(
+  #tags$img(src = "logo.jpg"),
   sidebarMenu(
-    style = "font-size: 20px",
     menuItem("About", tabName = "AB", icon = icon("fa-solid fa-question")),
     menuItem("Leagues", tabName = "LEAGUES", icon = icon("fa-solid fa-align-justify"),
              menuSubItem("Serie A", tabName = "SA", icon = icon("fa-solid fa-futbol")),
