@@ -19,7 +19,7 @@ league <- function(league_name){
   table <- table %>% as_tibble()
   table <- table %>% mutate(name = team$name) %>%
     relocate(name, .after = position) %>%
-    select(-form, -team)
+    select(-form, -team, -position)
   
   season <- league_standings$season
   
@@ -74,6 +74,16 @@ season_progress <- function(league_name){
   return(x)
 }
 
+plot_goals <- function(input, league_name){
+  table <- leagues$get(league_name)$get("table")
+  s = input[[paste(league_name,"_matches_table_rows_selected", sep="")]]
+  par(mar = c(4, 4, 1, .1))
+  goals <- table %>% select(goalsFor, goalsAgainst)
+  plot(goals, cex.axis=1.2, cex.lab=1.5, pch=c("⚽"))
+  if (length(s)) points(goals[s, , drop = FALSE], pch = c("🥅"), cex = 3, main = "bty='n'")
+  
+}
+
 leagues <- Dict$new(
   SA = league("SA"),
   PL = league("PL"),
@@ -105,13 +115,14 @@ server <- function(input, output){
   output$SA_progress <- renderValueBox({
     season_progress("SA")
   })
-  output$SA_scatter_plot <- renderPlot({
-    s = input$SA_matches_table_rows_selected
-    par(mar = c(4, 4, 1, .1))
-    goals <- leagues$get("SA")$get("table") %>% select(goalsFor, goalsAgainst)
-    plot(goals, cex.axis=1.2, cex.lab=1.5)
-    if (length(s)) points(goals[s, , drop = FALSE], pch = 19, cex = 2)
-  })
+  output$SA_scatter_plot <- renderPlot(
+    plot_goals(input, "SA")
+    #s = input$SA_matches_table_rows_selected
+    #par(mar = c(4, 4, 1, .1))
+    #goals <- leagues$get("SA")$get("table") %>% select(goalsFor, goalsAgainst)
+    #plot(goals, cex.axis=1.2, cex.lab=1.5, pch=c("⚽"))
+    #if (length(s)) points(goals[s, , drop = FALSE], pch = c("🥅"), cex = 3, main = "bty='n'")
+  )
   output$x4 = renderPrint({
     s = input$SA_matches_table_rows_all
     if (length(s)) {
