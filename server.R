@@ -79,8 +79,10 @@ plot_goals <- function(input, league_name){
   s = input[[paste(league_name,"_matches_table_rows_selected", sep="")]]
   par(mar = c(4, 4, 1, .1))
   goals <- table %>% select(goalsFor, goalsAgainst)
-  plot(goals, cex.axis=1.2, cex.lab=1.5, pch=c("⚽"))
-  if (length(s)) points(goals[s, , drop = FALSE], pch = c("🥅"), cex = 3, main = "bty='n'")
+  plot(goals, cex.axis=1.2, cex.lab=1.5, pch=c("⚽"),
+  xlab = "Goals For", ylab = "Gols Against", bty='n')
+  
+  if (length(s)) points(goals[s, , drop = FALSE], pch = c("🥅"), cex = 3)
   
 }
 
@@ -117,11 +119,6 @@ server <- function(input, output){
   })
   output$SA_scatter_plot <- renderPlot(
     plot_goals(input, "SA")
-    #s = input$SA_matches_table_rows_selected
-    #par(mar = c(4, 4, 1, .1))
-    #goals <- leagues$get("SA")$get("table") %>% select(goalsFor, goalsAgainst)
-    #plot(goals, cex.axis=1.2, cex.lab=1.5, pch=c("⚽"))
-    #if (length(s)) points(goals[s, , drop = FALSE], pch = c("🥅"), cex = 3, main = "bty='n'")
   )
   output$x4 = renderPrint({
     s = input$SA_matches_table_rows_all
