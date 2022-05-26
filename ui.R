@@ -1,6 +1,12 @@
 library(shiny)
 library(shinydashboard)
 library(httr)
+library(DT)
+library(jsonlite)
+library(dplyr)
+library(Dict)
+library(ggplot2)
+library(plotly)
 
 league_fluid_page <- function(league_name){
   x = fluidPage(
@@ -10,7 +16,7 @@ league_fluid_page <- function(league_name){
              title = "League Table",
              solidHeader = TRUE,
              width = NULL,
-             height = 550,
+             height = NULL,
              status = "primary",
              dataTableOutput(paste0(league_name,"_matches_table"))
            ), 
@@ -22,11 +28,12 @@ league_fluid_page <- function(league_name){
              title = "Top scorers",
              solidHeader = TRUE,
              width = NULL,
-             height = 550,
+             height = NULL,
              status = "primary",
              plotOutput(paste0(league_name,"_top_scorers"))
            ),
-           valueBoxOutput(paste0(league_name,"_progress"))
+           valueBoxOutput(paste0(league_name,"_progress")),
+           plotlyOutput(paste0(league_name,"_polar_plot"))
     )
   )
   return(x)

@@ -86,6 +86,40 @@ plot_goals <- function(input, league_name){
   
 }
 
+polar_plot <- function(input, league_name){
+  s = input[[paste(league_name,"_matches_table_rows_selected", sep="")]]
+  
+  x = plot_ly(
+    type = "scatterpolar",
+    mode = "markers",
+    r = c(0,0,0),
+    theta = c("won", "draw", "lost")
+  )
+  if (length(s) == 1) {
+    win_or_loose = leagues$get(league_name)$get("table") %>% select(won, draw, lost) %>% slice(s)
+    values = unlist(c(as.numeric(win_or_loose%>%select(won)),
+                      as.numeric(win_or_loose%>%select(draw)),
+                      as.numeric(win_or_loose%>%select(lost))))
+    x = plot_ly(
+      type = "scatterpolar",
+      mode = "markers",
+      r = values,
+      theta = c("won", "draw", "lost"),
+      fill = "toself"
+    ) %>% 
+      layout(
+        polar = list(
+          radialaxis = list(
+            visible = T,
+            range = c(0,max(values))
+          )
+        ),
+        showlegend = F
+      )
+  }
+  return(x)
+}
+
 leagues <- Dict$new(
   SA = league("SA"),
   PL = league("PL"),
@@ -120,12 +154,8 @@ server <- function(input, output){
   output$SA_scatter_plot <- renderPlot(
     plot_goals(input, "SA")
   )
-  output$x4 = renderPrint({
-    s = input$SA_matches_table_rows_all
-    if (length(s)) {
-      cat('These rows were selected:\n\n')
-      cat(s, sep = ', ')
-    }
+  output$SA_polar_plot = renderPlotly({
+    polar_plot(input, "SA")
   })
     
   #### PREMIER LEAGUE
@@ -139,6 +169,12 @@ server <- function(input, output){
   output$PL_progress <- renderValueBox({
     season_progress("PL")
   })
+  output$PL_scatter_plot <- renderPlot(
+    plot_goals(input, "PL")
+  )
+  output$PL_polar_plot = renderPlotly({
+    polar_plot(input, "PL")
+  })
   
   #### LA LIGA
   output$PD_matches_table <- renderDataTable({
@@ -151,7 +187,12 @@ server <- function(input, output){
   output$PD_progress <- renderValueBox({
     season_progress("PD")
   })
-  
+  output$PD_scatter_plot <- renderPlot(
+    plot_goals(input, "PD")
+  )
+  output$PD_polar_plot = renderPlotly({
+    polar_plot(input, "PD")
+  })
   
   #### BUNDESLIGA
   output$BL1_matches_table <- renderDataTable({
@@ -164,6 +205,12 @@ server <- function(input, output){
   output$BL1_progress <- renderValueBox({
     season_progress("BL1")
   })
+  output$BL1_scatter_plot <- renderPlot(
+    plot_goals(input, "BL1")
+  )
+  output$BL1_polar_plot = renderPlotly({
+    polar_plot(input, "BL1")
+  })
   
   #### LIGUE 1
   output$FL1_matches_table <- renderDataTable({
@@ -175,6 +222,12 @@ server <- function(input, output){
   )
   output$FL1_progress <- renderValueBox({
     season_progress("FL1")
+  })
+  output$FL1_scatter_plot <- renderPlot(
+    plot_goals(input, "FL1")
+  )
+  output$FL1_polar_plot = renderPlotly({
+    polar_plot(input, "FL1")
   })
   
   #### COMPARE
