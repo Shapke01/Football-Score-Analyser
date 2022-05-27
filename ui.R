@@ -41,7 +41,7 @@ league_fluid_page <- function(league_name){
 }
 
 
-header <- dashboardHeader(title = tags$img(src = "logo.jpg"))
+header <- dashboardHeader(title = tags$img(src = "logo.png"))
 
 sideBar <- dashboardSidebar(
   sidebarMenu(
