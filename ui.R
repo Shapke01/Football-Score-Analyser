@@ -18,7 +18,7 @@ league_fluid_page <- function(league_name){
              width = NULL,
              height = NULL,
              status = "primary",
-             dataTableOutput(paste0(league_name,"_matches_table"))
+             dataTableOutput(paste0(league_name,"_matches_table"), height = "400px")
            ), 
            plotOutput(paste0(league_name,"_scatter_plot")),
            ),

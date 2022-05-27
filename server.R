@@ -51,6 +51,13 @@ league <- function(league_name){
   return(dic)
 }
 
+league_datatable <- function(league_name){
+  
+  table <- leagues$get(league_name)$get("table") %>% 
+    select(-goalsFor, -goalsAgainst)
+  datatable(table, options = list(scrollY = "400px", lengthMenu = c(5, 10, 20, 30), pageLength=10))
+}
+
 top_score <- function(league_name){
   x = leagues$get(league_name)$get("scorers") %>%
     ggplot(aes(x=reorder(player$name, numberOfGoals), y=numberOfGoals)) +
@@ -142,8 +149,7 @@ server <- function(input, output){
   
   #### SERIES A
   output$SA_matches_table <- renderDataTable({
-    leagues$get("SA")$get("table") %>% 
-      select(-goalsFor, -goalsAgainst)
+    league_datatable("SA")
   })
   output$SA_top_scorers <- renderPlot(
     top_score("SA")
