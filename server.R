@@ -68,7 +68,7 @@ top_score <- function(input, league_name){
 matchday_box <- function(league_name){
   match_day <- leagues$get(league_name)$get("season")$currentMatchday
   x = valueBox(
-    match_day, "Current Match Day", icon = icon("fas fa-swords"),
+    match_day, "Current Match Day", icon = icon("fas fa-swords", verify_fa = FALSE),
     color = "green"
   )
   return(x)
@@ -78,7 +78,7 @@ season_progress <- function(league_name){
   progress <- as.numeric(Sys.Date() - as.Date(leagues$get(league_name)$get("season")$startDate, format = "%Y-%m-%d")) / 
     as.numeric((as.Date(leagues$get(league_name)$get("season")$endDate, format = "%Y-%m-%d")) - as.Date(leagues$get(league_name)$get("season")$startDate, format = "%Y-%m-%d"))
   x = valueBox(
-    paste0(format(min(round(progress, 3) *100, 100), nsmall = 1), "%"), "Season Progress", icon = icon("fas fa-trophy"),
+    paste0(format(min(round(progress, 3) *100, 100), nsmall = 1), "%"), "Season Progress", icon = icon("fas fa-trophy", verify_fa = FALSE),
     color = "purple"
   )
   return(x)
@@ -185,6 +185,9 @@ server <- function(input, output){
   output$PL_progress <- renderValueBox({
     season_progress("PL")
   })
+  output$PL_match_day <-renderValueBox({
+    matchday_box("PL")
+  })
   output$PL_scatter_plot <- renderPlot(
     plot_goals(input, "PL")
   )
@@ -201,6 +204,9 @@ server <- function(input, output){
   )
   output$PD_progress <- renderValueBox({
     season_progress("PD")
+  })
+  output$PD_match_day <-renderValueBox({
+    matchday_box("PD")
   })
   output$PD_scatter_plot <- renderPlot(
     plot_goals(input, "PD")
@@ -219,6 +225,9 @@ server <- function(input, output){
   output$BL1_progress <- renderValueBox({
     season_progress("BL1")
   })
+  output$BL1_match_day <-renderValueBox({
+    matchday_box("BL1")
+  })
   output$BL1_scatter_plot <- renderPlot(
     plot_goals(input, "BL1")
   )
@@ -236,6 +245,9 @@ server <- function(input, output){
   output$FL1_progress <- renderValueBox({
     season_progress("FL1")
   })
+  output$FL1_match_day <-renderValueBox({
+    matchday_box("FL1")
+  })
   output$FL1_scatter_plot <- renderPlot(
     plot_goals(input, "FL1")
   )
@@ -247,7 +259,7 @@ server <- function(input, output){
   output$CMP_golden_shoe <- renderValueBox({
     valueBox(all_leagues[which.max(all_leagues$numberOfGoals),]$player$name,
              "European Golden Shoe", 
-             icon = icon("fa-solid fa-shoe-prints"),
+             icon = icon("fa-solid fa-shoe-prints", verify_fa = FALSE),
              color = "yellow")
   })
   output$CMP_scorrers <- renderDataTable({

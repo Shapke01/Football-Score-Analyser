@@ -63,15 +63,15 @@ header <- dashboardHeader(title = tags$img(src = "logo.png"))
 
 sideBar <- dashboardSidebar(
   sidebarMenu(
-    menuItem("About", tabName = "AB", icon = icon("fa-solid fa-question")),
-    menuItem("Leagues", tabName = "LEAGUES", icon = icon("fa-solid fa-align-justify"),
-             menuSubItem("Serie A", tabName = "SA", icon = icon("fa-solid fa-futbol")),
-             menuSubItem("La Liga", tabName = "PD", icon = icon("fa-solid fa-futbol")),
-             menuSubItem("Premier League", tabName = "PL", icon = icon("fa-solid fa-futbol")),
-             menuSubItem("Ligue 1", tabName = "FL1", icon = icon("fa-solid fa-futbol")),
-             menuSubItem("Bundesliga", tabName = "BL1", icon = icon("fa-solid fa-futbol"))
+    menuItem("About", tabName = "AB", icon = icon("fa-solid fa-question", verify_fa = FALSE)),
+    menuItem("Leagues", tabName = "LEAGUES", icon = icon("fa-solid fa-align-justify", verify_fa = FALSE),
+             menuSubItem("Serie A", tabName = "SA", icon = icon("fa-solid fa-futbol", verify_fa = FALSE)),
+             menuSubItem("La Liga", tabName = "PD", icon = icon("fa-solid fa-futbol", verify_fa = FALSE)),
+             menuSubItem("Premier League", tabName = "PL", icon = icon("fa-solid fa-futbol", verify_fa = FALSE)),
+             menuSubItem("Ligue 1", tabName = "FL1", icon = icon("fa-solid fa-futbol", verify_fa = FALSE)),
+             menuSubItem("Bundesliga", tabName = "BL1", icon = icon("fa-solid fa-futbol", verify_fa = FALSE))
     ),
-    menuItem("Comparator", tabName = "CMP", icon = icon("fa-solid fa-sort"))
+    menuItem("Comparator", tabName = "CMP", icon = icon("fa-solid fa-sort", verify_fa = FALSE))
   )
 )
 
