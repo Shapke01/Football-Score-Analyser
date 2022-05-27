@@ -11,7 +11,7 @@ library(plotly)
 league_fluid_page <- function(league_name){
   x = fluidPage(
     
-    column(width=6,
+    column(width=7,
            box(
              title = "League Table",
              solidHeader = TRUE,
@@ -27,12 +27,13 @@ league_fluid_page <- function(league_name){
            box(
              title = "Top scorers",
              solidHeader = TRUE,
-             width = NULL,
+             width = 12,
              height = NULL,
              status = "primary",
-             plotOutput(paste0(league_name,"_top_scorers"))
+             plotOutput(paste0(league_name,"_top_scorers"), height = "300px"),
            ),
-           valueBoxOutput(paste0(league_name,"_progress")),
+           valueBoxOutput(paste0(league_name,"_progress"), width = 8),
+           valueBoxOutput(paste0(league_name,"_match_day"), width = 4),
            plotlyOutput(paste0(league_name,"_polar_plot"))
     )
   )

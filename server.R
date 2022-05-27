@@ -61,13 +61,21 @@ top_score <- function(league_name){
   return(x)
 }
 
+matchday_box <- function(league_name){
+  match_day <- leagues$get(league_name)$get("season")$currentMatchday
+  x = valueBox(
+    match_day, "Current Match Day", icon = icon("fas fa-swords"),
+    color = "green"
+  )
+  return(x)
+}
+
 season_progress <- function(league_name){
   progress <- as.numeric(Sys.Date() - as.Date(leagues$get(league_name)$get("season")$startDate, format = "%Y-%m-%d")) / 
     as.numeric((as.Date(leagues$get(league_name)$get("season")$endDate, format = "%Y-%m-%d")) - as.Date(leagues$get(league_name)$get("season")$startDate, format = "%Y-%m-%d"))
   x = valueBox(
     paste0(format(min(round(progress, 3) *100, 100), nsmall = 1), "%"), "Season Progress", icon = icon("fas fa-trophy"),
-    color = "purple",
-    width = NULL
+    color = "purple"
   )
   return(x)
 }
@@ -152,6 +160,9 @@ server <- function(input, output){
   output$SA_progress <- renderValueBox({
     season_progress("SA")
   })
+  output$SA_match_day <-renderValueBox({
+    matchday_box("SA")
+  })
   output$SA_scatter_plot <- renderPlot(
     plot_goals(input, "SA")
   )
@@ -161,8 +172,7 @@ server <- function(input, output){
     
   #### PREMIER LEAGUE
   output$PL_matches_table <- renderDataTable({
-    leagues$get("PL")$get("table") %>% 
-      select(-goalsFor, -goalsAgainst)
+    league_datatable("PL")
   })
   output$PL_top_scorers <- renderPlot(
     top_score("PL")
@@ -179,8 +189,7 @@ server <- function(input, output){
   
   #### LA LIGA
   output$PD_matches_table <- renderDataTable({
-    leagues$get("PD")$get("table") %>% 
-      select(-goalsFor, -goalsAgainst)
+    league_datatable("PD")
   })
   output$PD_top_scorers <- renderPlot(
     top_score("PD")
@@ -197,8 +206,7 @@ server <- function(input, output){
   
   #### BUNDESLIGA
   output$BL1_matches_table <- renderDataTable({
-    leagues$get("BL1")$get("table") %>% 
-      select(-goalsFor, -goalsAgainst)
+    league_datatable("BL1")
   })
   output$BL1_top_scorers <- renderPlot(
     top_score("BL1")
@@ -215,8 +223,7 @@ server <- function(input, output){
   
   #### LIGUE 1
   output$FL1_matches_table <- renderDataTable({
-    leagues$get("FL1")$get("table") %>% 
-      select(-goalsFor, -goalsAgainst)
+    league_datatable("FL1")
   })
   output$FL1_top_scorers <- renderPlot(
     top_score("FL1")
