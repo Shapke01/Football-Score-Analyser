@@ -15,26 +15,44 @@ league_fluid_page <- function(league_name){
            box(
              title = "League Table",
              solidHeader = TRUE,
-             width = NULL,
              height = NULL,
              status = "primary",
+             width = 12,
              dataTableOutput(paste0(league_name,"_matches_table"), height = "400px")
            ), 
-           plotOutput(paste0(league_name,"_scatter_plot")),
-           ),
+           box(
+             solidHeader = TRUE,
+             height = NULL,
+             status = "primary",
+             width = 12,
+             title = "Goals scored and lost",
+             plotOutput(paste0(league_name,"_scatter_plot")),
+           )
+          ),
     
     column(width=5,
            box(
+             
              title = "Top scorers",
              solidHeader = TRUE,
              width = 12,
              height = NULL,
              status = "primary",
-             plotOutput(paste0(league_name,"_top_scorers"), height = "300px"),
+             plotOutput(paste0(league_name,"_top_scorers"), height = "280px"),
+             sliderInput(paste0(league_name,"_range"), "Range of goals:",
+                         min=0, max=50, value=c(0,50), step=1)
            ),
            valueBoxOutput(paste0(league_name,"_progress"), width = 8),
            valueBoxOutput(paste0(league_name,"_match_day"), width = 4),
-           plotlyOutput(paste0(league_name,"_polar_plot"))
+           box(
+             title = "Win/draw/lose",
+             solidHeader = TRUE,
+             width = 12,
+             height = NULL,
+             status = "primary",
+             plotlyOutput(paste0(league_name,"_polar_plot"))
+           )
+           
     )
   )
   return(x)

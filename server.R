@@ -46,14 +46,18 @@ league_datatable <- function(league_name){
   
   table <- leagues$get(league_name)$get("table") %>% 
     select(-goalsFor, -goalsAgainst)
-  datatable(table, options = list(scrollY = "400px", lengthMenu = c(5, 10, 20, 30), pageLength=10))
+  datatable(table, options = list(scrollY = "400px", 
+                                  lengthMenu = c(5, 10, 20, 30), pageLength=10), 
+            selection = "single")
 }
 
-top_score <- function(league_name){
+top_score <- function(input, league_name){
+  r = input[[paste0(league_name,"_range")]]
   x = leagues$get(league_name)$get("scorers") %>%
+    filter(numberOfGoals>=r[1] & numberOfGoals<=r[2]) %>%
     ggplot(aes(x=reorder(player$name, numberOfGoals), y=numberOfGoals)) +
-    geom_bar(stat="identity", fill="#f68060", alpha=.6, width=.4) +
-    geom_text(aes(label=numberOfGoals), vjust=-1) +
+    geom_bar(stat="identity", fill="#009931", alpha=.6, width=.4) +
+    geom_text(aes(label=numberOfGoals), hjust=1) +
     theme(text = element_text(size = 20)) +
     coord_flip() +
     xlab("")
@@ -155,7 +159,7 @@ server <- function(input, output){
     league_datatable("SA")
   })
   output$SA_top_scorers <- renderPlot(
-    top_score("SA")
+    top_score(input, "SA")
   )
   output$SA_progress <- renderValueBox({
     season_progress("SA")
@@ -169,13 +173,14 @@ server <- function(input, output){
   output$SA_polar_plot = renderPlotly({
     polar_plot(input, "SA")
   })
+  output$SA_min_max_goals = 
     
   #### PREMIER LEAGUE
   output$PL_matches_table <- renderDataTable({
     league_datatable("PL")
   })
   output$PL_top_scorers <- renderPlot(
-    top_score("PL")
+    top_score(input, "PL")
   )
   output$PL_progress <- renderValueBox({
     season_progress("PL")
@@ -192,7 +197,7 @@ server <- function(input, output){
     league_datatable("PD")
   })
   output$PD_top_scorers <- renderPlot(
-    top_score("PD")
+    top_score(input, "PD")
   )
   output$PD_progress <- renderValueBox({
     season_progress("PD")
@@ -209,7 +214,7 @@ server <- function(input, output){
     league_datatable("BL1")
   })
   output$BL1_top_scorers <- renderPlot(
-    top_score("BL1")
+    top_score(input, "BL1")
   )
   output$BL1_progress <- renderValueBox({
     season_progress("BL1")
@@ -226,7 +231,7 @@ server <- function(input, output){
     league_datatable("FL1")
   })
   output$FL1_top_scorers <- renderPlot(
-    top_score("FL1")
+    top_score(input, "FL1")
   )
   output$FL1_progress <- renderValueBox({
     season_progress("FL1")
