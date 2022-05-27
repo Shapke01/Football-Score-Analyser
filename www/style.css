@@ -8,9 +8,18 @@ body {
 .main-sidebar {
   font-size: 24px;
 }
-img {
-  width: 100px;
-  height: 100px;
+.main-header .logo{
+  height: 200px;
+}
+.main-header .logo > img{
+  height: 200px;
+  width: 200px;
+}
+.navbar{
+  height: 50px;
+}
+.sidebar{
+  margin-top: 200px;
 }
 .box {
   margin-top: 20px;
