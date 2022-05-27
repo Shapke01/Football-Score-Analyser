@@ -31,15 +31,6 @@ league <- function(league_name){
   scorers <- bind_rows(scorers)
   scorers <- scorers %>% as_tibble()
   
-#  league_matches = GET(paste("http://api.football-data.org/v2/competitions/",league_name,"/matches", sep = ""),
-#                       add_headers("X-Auth-Token"="0fdd6155b06b4707bda7e82a11b5c44f"))
-#  league_matches <- content(league_matches, as="text")
-#  league_matches <- fromJSON(league_matches)
-#  matches <- as.data.frame(league_matches$matches)
-#  matches <- bind_rows(matches)
-#  matches <- matches %>% as_tibble()
-  
-  
   dic <- Dict$new(
     table = table,
     season = season,
@@ -136,14 +127,18 @@ leagues <- Dict$new(
   .overwrite = TRUE
 )
 
-all_leagues = bind_rows(data.frame(leagues$get("SA")$get("scorers")) ,
-                    data.frame(leagues$get("PL")$get("scorers")) ,
-                    data.frame(leagues$get("PD")$get("scorers")) ,
-                    data.frame(leagues$get("BL1")$get("scorers")) ,
-                    data.frame(leagues$get("FL1")$get("scorers")) )
+all_leagues = bind_rows((leagues$get("SA")$get("scorers")) ,
+                    (leagues$get("PL")$get("scorers")) ,
+                    (leagues$get("PD")$get("scorers")) ,
+                    (leagues$get("BL1")$get("scorers")) ,
+                    (leagues$get("FL1")$get("scorers")))
 
-data.frame(leagues$get("SA")$get("scorers")) 
-
+all_league_scorers <- function(){
+  table <- mutate(all_leagues, Name = player$name, Nationality = player$nationality, Team = team$name, Goals = numberOfGoals) %>%
+  select(Name, Nationality, Team, Goals) %>%
+  arrange(desc(Goals))
+  return(table)
+  }
 
 server <- function(input, output){
   
@@ -243,7 +238,8 @@ server <- function(input, output){
              icon = icon("fa-solid fa-shoe-prints"),
              color = "yellow")
   })
-  
-  
+  output$CMP_scorrers <- renderDataTable({
+    datatable(all_league_scorers(), options = list(scrollY = "400px", lengthMenu = c(5, 10, 20, 30), pageLength=10))
+  })
 }
 

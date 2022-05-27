@@ -34,3 +34,8 @@ body {
 .skin-blue .main-sidebar .sidebar .sidebar-menu a{
     font-size: 18px;
 }
+
+.box-body td:nth-child(7){
+  font-weight: bold;
+  background: #ccc;
+}

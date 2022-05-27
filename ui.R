@@ -90,7 +90,8 @@ body <- dashboardBody(
     
     tabItem("CMP",
             fluidPage(
-              valueBoxOutput("CMP_golden_shoe")
+              valueBoxOutput("CMP_golden_shoe"),
+              dataTableOutput("CMP_scorrers")
             )
     )
   )
