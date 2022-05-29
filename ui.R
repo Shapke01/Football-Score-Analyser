@@ -7,6 +7,7 @@ library(dplyr)
 library(Dict)
 library(ggplot2)
 library(plotly)
+library(shinyWidgets)
 
 league_fluid_page <- function(league_name){
   x = fluidPage(
@@ -109,8 +110,25 @@ body <- dashboardBody(
     
     tabItem("CMP",
             fluidPage(
-              valueBoxOutput("CMP_golden_shoe"),
-              dataTableOutput("CMP_scorrers")
+              valueBoxOutput("CMP_golden_shoe", width = 12),
+              box(
+                title = "Golden Shoe Table",
+                solidHeader = TRUE,
+                height = NULL,
+                status = "primary",
+                dataTableOutput("CMP_scorrers")
+              ),
+              box(
+                title = "Most Interesting Leagues",
+                solidHeader = TRUE,
+                height = NULL,
+                status = "primary",
+                plotOutput("CMP_sum"),
+                  switchInput(inputId = "switch",
+                              label = "Change",
+                              offLabel = "Goals of TOP 10 Players",
+                              onLabel = "All goals")
+              )
             )
     )
   )

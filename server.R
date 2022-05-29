@@ -19,7 +19,8 @@ league <- function(league_name){
   table <- table %>% as_tibble()
   table <- table %>% mutate(name = team$name) %>%
     relocate(name, .after = position) %>%
-    select(-form, -team, -position)
+    select(-form, -team, -position) %>%
+    mutate(league_name = league_name)
   
   season <- league_standings$season
   
@@ -29,13 +30,13 @@ league <- function(league_name){
   league_scorers <- fromJSON(league_scorers)
   scorers <- as.data.frame(league_scorers$scorers)
   scorers <- bind_rows(scorers)
-  scorers <- scorers %>% as_tibble()
+  scorers <- scorers %>% as_tibble() %>%
+    mutate(league_name = league_name)
   
   dic <- Dict$new(
     table = table,
     season = season,
     scorers = scorers,
-    matches = matches,
     .overwrite = TRUE
   )
   
@@ -139,14 +140,20 @@ leagues <- Dict$new(
   .overwrite = TRUE
 )
 
-all_leagues = bind_rows((leagues$get("SA")$get("scorers")) ,
-                    (leagues$get("PL")$get("scorers")) ,
-                    (leagues$get("PD")$get("scorers")) ,
-                    (leagues$get("BL1")$get("scorers")) ,
+all_leagues_players = bind_rows((leagues$get("SA")$get("scorers")),
+                    (leagues$get("PL")$get("scorers")),
+                    (leagues$get("PD")$get("scorers")),
+                    (leagues$get("BL1")$get("scorers")),
                     (leagues$get("FL1")$get("scorers")))
 
+all_leagues_tables = bind_rows((leagues$get("SA")$get("table")),
+                                (leagues$get("PL")$get("table")),
+                                (leagues$get("PD")$get("table")),
+                                (leagues$get("BL1")$get("table")),
+                                (leagues$get("FL1")$get("table")))
+
 all_league_scorers <- function(){
-  table <- mutate(all_leagues, Name = player$name, Nationality = player$nationality, Team = team$name, Goals = numberOfGoals) %>%
+  table <- mutate(all_leagues_players, Name = player$name, Nationality = player$nationality, Team = team$name, Goals = numberOfGoals) %>%
   select(Name, Nationality, Team, Goals) %>%
   arrange(desc(Goals))
   return(table)
@@ -257,10 +264,28 @@ server <- function(input, output){
   
   #### COMPARE
   output$CMP_golden_shoe <- renderValueBox({
-    valueBox(all_leagues[which.max(all_leagues$numberOfGoals),]$player$name,
+    valueBox(all_leagues_players[which.max(all_leagues_players$numberOfGoals),]$player$name,
              "European Golden Shoe", 
              icon = icon("fa-solid fa-shoe-prints", verify_fa = FALSE),
              color = "yellow")
+  })
+  output$CMP_sum <- renderPlot({
+    if(input$switch==TRUE){
+      data = all_leagues_tables %>%
+        group_by(league_name) %>%
+        summarise(total_goals = sum(goalsFor))
+    }else{
+      data = all_leagues_players %>%
+        group_by(league_name) %>%
+        summarise(total_goals = sum(numberOfGoals))
+    }
+    
+    ggplot(data = data, aes(x=reorder(league_name, -total_goals), y=total_goals)) +
+      geom_bar(stat="identity", fill="#009931", alpha=.6, width=.4) +
+      theme_minimal() +
+      ylab("Number of Goals") +
+      xlab("League Name") +
+      coord_cartesian(ylim = c(min(data$total_goals)/(5/4), max(data$total_goals)))
   })
   output$CMP_scorrers <- renderDataTable({
     datatable(all_league_scorers(), options = list(scrollY = "400px", lengthMenu = c(5, 10, 20, 30), pageLength=10))
