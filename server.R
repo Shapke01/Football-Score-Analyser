@@ -46,23 +46,25 @@ league <- function(league_name){
 league_datatable <- function(league_name){
   
   table <- leagues$get(league_name)$get("table") %>% 
-    select(-goalsFor, -goalsAgainst)
+    rename(Team = name, "Played Games" = playedGames, Won = won, Draw = draw, Lost = lost, Points = points, "Goal Difference" = goalDifference) %>%
+    select(-goalsFor, -goalsAgainst, -league_name)
   datatable(table, options = list(scrollY = "400px", 
                                   lengthMenu = c(5, 10, 20, 30), pageLength=10), 
             selection = "single")
+  
 }
 
 top_score <- function(input, league_name){
   r = input[[paste0(league_name,"_range")]]
   x = leagues$get(league_name)$get("scorers") %>%
-    filter(numberOfGoals>=r[1] & numberOfGoals<=r[2]) %>%
+    filter(numberOfGoals >= r[1] & numberOfGoals <= r[2]) %>%
     ggplot(aes(x=reorder(player$name, numberOfGoals), y=numberOfGoals)) +
     geom_bar(stat="identity", fill="#009931", alpha=.6, width=.4) +
     geom_text(aes(label=numberOfGoals), hjust=1) +
     theme(text = element_text(size = 20)) +
     coord_flip() +
-    xlab("")
-    #theme_bw()
+    xlab("") +
+    ylab("Goals")
   return(x)
 }
 
@@ -88,10 +90,10 @@ season_progress <- function(league_name){
 plot_goals <- function(input, league_name){
   table <- leagues$get(league_name)$get("table")
   s = input[[paste(league_name,"_matches_table_rows_selected", sep="")]]
-  par(mar = c(4, 4, 1, .1))
+  par(mar = c(5, 5, 1, .5))
   goals <- table %>% select(goalsFor, goalsAgainst)
   plot(goals, cex.axis=1.2, cex.lab=1.5, pch=c("⚽"),
-  xlab = "Goals For", ylab = "Gols Against", bty='n')
+  xlab = "Goals For", ylab = "Goals Against", bty='n')
   
   if (length(s)) points(goals[s, , drop = FALSE], pch = c("🥅"), cex = 3)
   

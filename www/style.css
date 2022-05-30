@@ -49,14 +49,17 @@ h2{
   border: none;
   border-radius:15px;
 }
+
 .box.box-solid.box-primary>.box-header{
     background-color: #3E3E3E;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
 }
+
 .box-header h3.box-title {
    font-weight: bold;
    font-size: 30px;
 }
-
 .skin-blue .main-sidebar .sidebar .sidebar-menu a{
     font-size: 18px;
     background-color: #3E3E3E;
