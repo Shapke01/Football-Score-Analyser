@@ -39,7 +39,7 @@ league_fluid_page <- function(league_name){
              width = 12,
              height = NULL,
              status = "primary",
-             plotOutput(paste0(league_name,"_top_scorers"), height = "280px"),
+             plotOutput(paste0(league_name,"_top_scorers"), height = "290px"),
              sliderInput(paste0(league_name,"_range"), "Range of goals:",
                          min=0, max=50, value=c(0,50), step=1)
            ),
@@ -143,4 +143,4 @@ body <- dashboardBody(
   )
 )
 
-ui <- dashboardPage(header, sideBar, body)
+ui <- dashboardPage(title = "Football Score Analyzer", header, sideBar, body)

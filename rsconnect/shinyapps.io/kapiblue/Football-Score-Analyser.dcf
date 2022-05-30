@@ -1,0 +1,13 @@
+name: Football-Score-Analyser
+title: Football-Score-Analyser
+username:
+account: kapiblue
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 6383631
+bundleId: 5960600
+url: https://kapiblue.shinyapps.io/Football-Score-Analyser/
+when: 1653927859.50885
+lastSyncTime: 1653927859.50888
+asMultiple: FALSE
+asStatic: FALSE
