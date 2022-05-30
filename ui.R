@@ -84,7 +84,16 @@ body <- dashboardBody(
     # About
     tabItem("AB",
             fluidPage(
-              h2("Soccer Scores Analyzer")
+              column(width = 12,
+                box(
+                  img(src="help1.jpg",
+                      style="display: block; margin-left: auto; margin-right: auto; width: 100%; max-width: 800px;")
+                ),
+                box(
+                  img(src="help2.jpg",
+                      style="display: block; margin-left: auto; margin-right: auto; width: 100%; max-width: 800px;")
+                )
+              )
             )
     ),
     #Series A

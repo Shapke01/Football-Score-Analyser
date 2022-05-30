@@ -285,8 +285,8 @@ server <- function(input, output){
     ggplot(data = data, aes(x=reorder(league_name, -total_goals), y=total_goals)) +
       geom_bar(stat="identity", fill="#009931", alpha=.6, width=.4) +
       theme_minimal() +
-      ylab("Number of Goals") +
-      xlab("League Name") +
+      xlab("Number of Goals") +
+      ylab("League Name") +
       coord_cartesian(ylim = c(min(data$total_goals)/(5/4), max(data$total_goals))) +
       theme(axis.text = element_text(size = 16)) +
       theme(axis.title = element_text(size = 20, margin = margin(b = 30, l = 30))) 
