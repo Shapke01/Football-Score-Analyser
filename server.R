@@ -287,7 +287,9 @@ server <- function(input, output){
       theme_minimal() +
       ylab("Number of Goals") +
       xlab("League Name") +
-      coord_cartesian(ylim = c(min(data$total_goals)/(5/4), max(data$total_goals)))
+      coord_cartesian(ylim = c(min(data$total_goals)/(5/4), max(data$total_goals))) +
+      theme(axis.text = element_text(size = 16)) +
+      theme(axis.title = element_text(size = 20, margin = margin(b = 30, l = 30))) 
   })
   output$CMP_scorrers <- renderDataTable({
     datatable(all_league_scorers(), options = list(scrollY = "400px", lengthMenu = c(5, 10, 20, 30), pageLength=10))
