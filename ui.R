@@ -84,12 +84,41 @@ body <- dashboardBody(
     # About
     tabItem("AB",
             fluidPage(
+              column(
+                width = 10, offset = 1,
+                box(
+                  title = "Football Score Analyzer",
+                  solidHeader = TRUE,
+                  status = "primary",
+                  width = 12,
+                  span(textOutput("text1"),
+                     style="color: black; font-size: 25px;")
+                )
+              ),
               column(width = 12,
                 box(
-                  img(src="help1.jpg")
+                  title = "League tab",
+                  solidHeader = TRUE,
+                  status = "primary",
+                  box(
+                    height = "100px",
+                    width = 12,
+                    span(textOutput("text2"),
+                         style="color: black; font-size: 15px")
+                  ),
+                  img(src="help1.jpg", height = "500px")
                 ),
                 box(
-                  img(src="help2.jpg")
+                  title = "Comapare tab",
+                  solidHeader = TRUE,
+                  status = "primary",
+                  box(
+                    height = "100px",
+                    width = 12,
+                    span(textOutput("text3"),
+                         style="color: black; font-size: 15px")
+                  ),
+                  img(src="help2.jpg", height = "500px")
                 )
               )
             )
