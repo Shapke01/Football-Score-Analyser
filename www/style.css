@@ -78,3 +78,17 @@ h2{
   font-weight: bold;
   background: #ccc;
 }
+div #shiny-tab-AB img{
+  display: block; 
+  margin-left: auto; 
+  margin-right: auto; 
+  width: 100%; 
+  max-width: 800px;
+}
+div #shiny-tab-AB div{
+  background-color: #578F63;
+  border: 0px;
+}
+.dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody{
+  border-radius: 0px;
+}

@@ -86,12 +86,10 @@ body <- dashboardBody(
             fluidPage(
               column(width = 12,
                 box(
-                  img(src="help1.jpg",
-                      style="display: block; margin-left: auto; margin-right: auto; width: 100%; max-width: 800px;")
+                  img(src="help1.jpg")
                 ),
                 box(
-                  img(src="help2.jpg",
-                      style="display: block; margin-left: auto; margin-right: auto; width: 100%; max-width: 800px;")
+                  img(src="help2.jpg")
                 )
               )
             )

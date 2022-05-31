@@ -92,10 +92,10 @@ plot_goals <- function(input, league_name){
   s = input[[paste(league_name,"_matches_table_rows_selected", sep="")]]
   par(mar = c(5, 5, 1, .5))
   goals <- table %>% select(goalsFor, goalsAgainst)
-  plot(goals, cex.axis=1.2, cex.lab=1.5, pch=c("⚽"),
+  plot(goals, cex.axis=1.2, cex.lab=1.5, pch=-0xf1e3, cex = 1.2,
   xlab = "Goals For", ylab = "Goals Against", bty='n')
   
-  if (length(s)) points(goals[s, , drop = FALSE], pch = c("🥅"), cex = 3)
+  if (length(s)) points(goals[s, , drop = FALSE], bg="green", cex = 2)
   
 }
 
@@ -285,8 +285,8 @@ server <- function(input, output){
     ggplot(data = data, aes(x=reorder(league_name, -total_goals), y=total_goals)) +
       geom_bar(stat="identity", fill="#009931", alpha=.6, width=.4) +
       theme_minimal() +
-      xlab("Number of Goals") +
-      ylab("League Name") +
+      ylab("Number of Goals") +
+      xlab("League Name") +
       coord_cartesian(ylim = c(min(data$total_goals)/(5/4), max(data$total_goals))) +
       theme(axis.text = element_text(size = 16)) +
       theme(axis.title = element_text(size = 20, margin = margin(b = 30, l = 30))) 
