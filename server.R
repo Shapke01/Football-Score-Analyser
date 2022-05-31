@@ -95,7 +95,7 @@ plot_goals <- function(input, league_name){
   plot(goals, cex.axis=1.2, cex.lab=1.5, pch=-0xf1e3, cex = 1.2,
   xlab = "Goals For", ylab = "Goals Against", bty='n')
   
-  if (length(s)) points(goals[s, , drop = FALSE], bg="green", cex = 2)
+  if (length(s)) points(goals[s, , drop = FALSE], pch=-0xf1e3, cex = 2)
   
 }
 

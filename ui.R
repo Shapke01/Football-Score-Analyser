@@ -46,7 +46,7 @@ league_fluid_page <- function(league_name){
            valueBoxOutput(paste0(league_name,"_progress"), width = 8),
            valueBoxOutput(paste0(league_name,"_match_day"), width = 4),
            box(
-             title = "Won/Draw/Lost",
+             title = "Won, draw and lost",
              solidHeader = TRUE,
              width = 12,
              height = NULL,
