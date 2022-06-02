@@ -163,32 +163,8 @@ all_league_scorers <- function(){
 
 server <- function(input, output){
   
-  output$text1 <- renderText({
-    "Our football score analyzer comes to the rescue 
-     when you want to stay up to date 
-     with your favorite football team's performance
-     in one of the top 5 leagues in the world! 
-     The page has 5 separate tabs for each league
-     and 1 tab to compare all leagues at once."
-  })
-  
-  output$text2 <- renderText({
-    "In the league tab we have the possibility to 
-    compare the statistics of teams and players. 
-    When we select one team from the table the corresponding
-    point will be selected on the 'Goals scored and lost' chart 
-    and the win/loss ratio will be displayed on the 'Won, draw and lost' chart.
-    Using the slider on the 'Top scorers' 
-    chart we can set the range of goals we want to display."
-  })
-  
-  
   output$text3 <- renderText({
-    "In the 'Compare' tab we have the ability to 
-    compare statistics between leagues.
-    In the 'Most Interesting Leagues' window, 
-    we can choose whether to compare the number of goals 
-    in the entire league or just the goal count of the 10 most scoring players."
+    
   })
   #### SERIES A
   output$SA_matches_table <- renderDataTable({

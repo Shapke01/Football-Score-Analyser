@@ -80,15 +80,28 @@ h2{
 }
 div #shiny-tab-AB img{
   display: block; 
+  margin-top: 50px;
   margin-left: auto; 
-  margin-right: auto; 
-  width: 100%; 
+  margin-right: auto;
+  width: 100%;
+  height: auto;
   max-width: 800px;
 }
 div #shiny-tab-AB div{
   background-color: #578F63;
-  border: 0px;
+  box-shadow: none;
 }
 .dataTables_wrapper .dataTables_scroll div.dataTables_scrollBody{
   border-radius: 0px;
 }
+
+.text1 {
+  color: white; 
+  font-size: 25px;
+}
+
+.text2{
+  color: white; 
+  font-size: 18px;
+}
+

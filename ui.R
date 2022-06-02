@@ -91,8 +91,12 @@ body <- dashboardBody(
                   solidHeader = TRUE,
                   status = "primary",
                   width = 12,
-                  span(textOutput("text1"),
-                     style="color: black; font-size: 25px;")
+                  p("Our football score analyzer comes to the rescue 
+                    when you want to stay up to date 
+                    with your favorite football team's performance
+                    in one of the top 5 leagues in the world! 
+                    The page has five separate tabs for each league
+                    and one tab to compare all leagues at once.", class="text1")
                 )
               ),
               column(width = 12,
@@ -101,10 +105,15 @@ body <- dashboardBody(
                   solidHeader = TRUE,
                   status = "primary",
                   box(
-                    height = "100px",
+                    height = "200px",
                     width = 12,
-                    span(textOutput("text2"),
-                         style="color: black; font-size: 15px")
+                    p("In the league tab we have the possibility to 
+                      compare the statistics of teams and players. 
+                      When we select one team from the table the corresponding
+                      point will be selected on the Goals scored and lost chart 
+                      and the goal balance will be displayed on the Won, draw and lost chart.
+                      Using the slider on the Top scorers
+                      chart we can set the range of goals we want to display.", class="text2")
                   ),
                   img(src="help1.jpg", height = "500px")
                 ),
@@ -113,10 +122,13 @@ body <- dashboardBody(
                   solidHeader = TRUE,
                   status = "primary",
                   box(
-                    height = "100px",
+                    height = "200px",
                     width = 12,
-                    span(textOutput("text3"),
-                         style="color: black; font-size: 15px")
+                    p("In the Compare tab we have the ability to 
+                    compare statistics between leagues.
+                    In the Most Interesting Leagues section
+                    we can choose whether to compare the number of goals 
+                    in the entire league or just the goal count of the 10 most-scoring players.", class="text2")
                   ),
                   img(src="help2.jpg", height = "500px")
                 )
